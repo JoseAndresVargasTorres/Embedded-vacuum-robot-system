@@ -1,0 +1,12 @@
+.player button {
+  background: #1db954;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.player input {
+  width: 100px;
+}
