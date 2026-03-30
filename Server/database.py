@@ -17,7 +17,6 @@ def init_db():
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
-        full_name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password_hash BLOB NOT NULL
     );
@@ -28,16 +27,16 @@ def init_db():
 
 
 # Registrar usuario
-def register_user(username, full_name, email, password):
+def register_user(username, email, password):
     conn, cursor = get_db()
 
     try:
         password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         cursor.execute("""
-            INSERT INTO users (username, full_name, email, password_hash)
-            VALUES (?, ?, ?, ?)
-        """, (username, full_name, email, password_hash))
+            INSERT INTO users (username, email, password_hash)
+            VALUES (?, ?, ?)
+        """, (username, email, password_hash))
 
         conn.commit()
         conn.close()
@@ -47,17 +46,13 @@ def register_user(username, full_name, email, password):
     except Exception:
         conn.close()
         return False
-
-
-# Verificar email
-def check_email(email):
+    
+# Verificar que el nombre de usuario no se repita
+def username_exists(username):
     conn, cursor = get_db()
-
-    cursor.execute("SELECT email FROM users WHERE email = ?", (email,))
-    result = cursor.fetchone()
-
+    cursor.execute("SELECT 1 FROM users WHERE username = ? LIMIT 1", (username,))
+    return cursor.fetchone() 
     conn.close()
-
     return result is not None
 
 

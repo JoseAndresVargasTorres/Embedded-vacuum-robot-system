@@ -20,7 +20,7 @@ loginForm.addEventListener('submit', async (e) => {
     const password = document.getElementById("password-login").value;
 
     // Enviar los datos al servidor usando fetch
-    const response = await fetch('/login', {
+    const response = await fetch('/login', { // fetch es una api de javascript para enviar y recibir datos del servidor
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
