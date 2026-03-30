@@ -1,8 +1,20 @@
 from flask import Flask, render_template, request, jsonify, session
 from database import *
 
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
+
 
 app = Flask(__name__)
+
+# Cliente de spotify, con los permisos necesarios
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+    client_id="4211bade7d42451eb64ef23b05a147a9",
+    client_secret="1e5e5c4dcd2a4213929c39e5775e8ae9",
+    redirect_uri="http://127.0.0.1:8888/callback",
+    scope="user-modify-playback-state user-read-playback-state"
+))
 
 # Inicializar la base de datos, crear tabla si no existe
 init_db()
@@ -67,6 +79,38 @@ def dashboard():
     return render_template('dashboard.html')
         
 
+# Endpoints para la música 
+
+@app.route('/api/play')
+def play():
+    sp.start_playback()
+    return {"status": "playing"}
+
+@app.route('/api/pause')
+def pause():
+    sp.pause_playback()
+    return {"status": "paused"}
+
+@app.route('/api/next')
+def next_track():
+    sp.next_track()
+    return {"status": "next"}
+
+@app.route('/api/previous')
+def previous_track():
+    sp.previous_track()
+    return {"status": "previous"}
+
+
+@app.route('/api/volume/<int:vol>')
+def volume(vol):
+    sp.volume(vol)
+    return {"status": f"volume {vol}"}
+
+
+@app.route('/api/current')
+def current():
+    return jsonify(sp.current_playback());
 
 
 if __name__ == '__main__':

@@ -48,8 +48,8 @@ body{
     justify-content: flex-end;
     align-items: center;
 
-    /* Espacio entre los botones */
-    gap: 10px;
+    /* Espacio entre líneas */
+    gap: 3px;
 
     /* Para trabajar con respecto a files */
     flex-direction: column;
@@ -142,3 +142,16 @@ body{
     display: flex;
     gap: 30px;
  }
+
+/* Tamaños de letra para la información de la canción sonando */
+#song-name{
+    font-size: 15px;
+    font-weight: 600; /* Para que sea negrita */
+    color: #333;
+}  
+
+#song-artist{
+    font-size: 11px;
+    font-weight: 300; /* Para que sea negrita */
+    color: #333;
+}  
