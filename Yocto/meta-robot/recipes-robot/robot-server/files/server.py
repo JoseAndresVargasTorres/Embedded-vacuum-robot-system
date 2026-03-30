@@ -11,6 +11,9 @@ libcontrol = ctypes.CDLL('/usr/lib/libcontrol.so')
 libcontrol.sensor_distancia_frontal.restype = ctypes.c_float
 libcontrol.sensor_distancia_lateral.restype = ctypes.c_float
 
+#Inicializar hardware
+libcontrol.control_init()
+
 # ---- RUTAS DE MOTORES ----
 @app.route('/motor/adelante', methods=['POST'])
 def adelante():
@@ -47,11 +50,15 @@ def sensores():
     frontal = libcontrol.sensor_distancia_frontal()
     lateral = libcontrol.sensor_distancia_lateral()
     return jsonify({
-        'frontal': frontal,
-        'lateral': lateral
+        'frontal': round(frontal, 2),
+        'lateral': round(lateral, 2),
+        'unidad': 'cm',
+        'obstaculo_frontal': frontal < 20.0 and frontal > 0,
+        'obstaculo_lateral': lateral < 20.0 and lateral > 0
     })
 
-# ---- RUTAS DE AUDIO ----
+
+##RUTAS DE AUDIO ----
 @app.route('/audio/reproducir', methods=['POST'])
 def reproducir():
     archivo = request.json.get('archivo', '')
