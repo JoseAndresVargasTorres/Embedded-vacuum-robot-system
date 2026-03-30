@@ -10,42 +10,43 @@
 </head>
 <body>
     <div class ="container">
+
         <!-- Login Form -->
-        <div class="form-box login">
-            <form action="#">
+        <div id="login-form"class="form-box login">
+            <form action="/login" method="post">
                 <h1>Login</h1>
                 <div class="input-box">
-                    <input type="text" placeholder="Username" required>
+                    <input name="username" id="username-login" type="text" placeholder="Username" required>
                     <i class="fa-solid fa-user"></i> <!-- Esto es para el logo -->
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password" required>
+                    <input name="password" id="password-login" type="password" placeholder="Password" required>
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <div class="forgot-link">
                     <a href="#">Forgot Password?</a>
                 </div>
-                <button type="submit" class="btn">Login</button>
+                <button type="submit" id="login-btn" class="btn">Login</button>
             </form>
         </div>
 
         <!-- Register Form -->
-        <div class="form-box register">
-            <form action="#">
+        <div id="register-form" class="form-box register">
+            <form action="/register" method="post">
                 <h1>Registration</h1>
                 <div class="input-box">
-                    <input type="text" placeholder="Username" required>
+                    <input name="username" id="username-register" type="text" placeholder="Username" required>
                     <i class="fa-solid fa-user"></i> <!-- Esto es para el logo -->
                 </div>
                 <div class="input-box">
-                    <input type="email" placeholder="Email" required>
+                    <input name="email" id="email-register" type="email" placeholder="Email" required>
                     <i class="fa-solid fa-envelope"></i>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password" required>
+                    <input name="password" id="password-register" type="password" placeholder="Password" required>
                     <i class="fa-solid fa-lock"></i>
                 </div>
-                <button type="submit" class="btn">Register</button>
+                <button type="submit" id="register-btn" class="btn">Register</button>
             </form>
         </div>
 
