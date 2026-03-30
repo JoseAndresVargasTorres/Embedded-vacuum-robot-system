@@ -7,6 +7,7 @@ app = Flask(__name__)
 # Inicializar la base de datos, crear tabla si no existe
 init_db()
 
+# Página de inicio con el formulario de registro y login
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -59,6 +60,11 @@ def list_users():
     rows = cursor.fetchall()
     conn.close()
     return jsonify(rows)
+
+# Ventana de dashboard después de iniciar sesión
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
         
 
 
