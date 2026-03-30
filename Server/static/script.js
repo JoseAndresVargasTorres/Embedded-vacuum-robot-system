@@ -3,6 +3,8 @@ const registerBtn = document.querySelector('.register-btn');
 const loginBtn = document.querySelector('.login-btn');
 
 
+// --- Index.html ---
+
 // Botones para cambiar entre login y registro, solo visual
 registerBtn.addEventListener('click', () => {
     container.classList.add('active');
@@ -67,3 +69,5 @@ registerForm.addEventListener('submit', async (e) => {
     // Limpiar los campos del formulario, solo en caso de que falle
     registerForm.reset();
 });
+
+

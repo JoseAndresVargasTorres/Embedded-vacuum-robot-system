@@ -37,9 +37,108 @@ body{
     bottom: 20px;
     right: 20px;
     width: 250px;
-    height: 150px;
+    height: 170px;
     background: #fff;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
     padding: 10px;
+
+    /* Para acomodar los botones dentro del contenedor */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    /* Espacio entre los botones */
+    gap: 10px;
+
+    /* Para trabajar con respecto a files */
+    flex-direction: column;
+ }
+
+ #play-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #7494ec;
+ }
+
+ /* Para cambiar el botón cuando el mouse pase por el botón */
+ #play-btn:hover{
+    color: #5a7bc8; /* #4a6fd4 */
+ }
+
+
+ #left-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #7494ec;
+ }
+
+ /* Para cambiar el botón cuando el mouse pase por el botón */
+ #left-btn:hover{
+    color: #5a7bc8; /* #4a6fd4 */
+ }
+
+ #right-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #7494ec;
+ }
+
+ /* Para cambiar el botón cuando el mouse pase por el botón */
+ #right-btn:hover{
+    color: #5a7bc8; /* #4a6fd4 */
+ }
+
+
+ #right-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #7494ec;
+ }
+
+ /* Para cambiar el botón cuando el mouse pase por el botón */
+ #right-btn:hover{
+    color: #5a7bc8; /* #4a6fd4 */
+ }
+
+
+ #high-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #7494ec;
+ }
+
+ /* Para cambiar el botón cuando el mouse pase por el botón */
+ #high-btn:hover{
+    color: #5a7bc8; /* #4a6fd4 */
+ }
+
+
+ #low-btn{
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #7494ec;
+ }
+
+ /* Para cambiar el botón cuando el mouse pase por el botón */
+ #low-btn:hover{
+    color: #5a7bc8; /* #4a6fd4 */
+ }
+
+ /* Poner los botones de volumen una línea más abajo */
+ .line2, .line3{
+    display: flex;
+    gap: 30px;
  }

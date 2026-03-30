@@ -19,7 +19,32 @@
 
     <div class ="container-music">
         <!-- Cuadro para la música -->
-         
-    </div>
+
+        <div class="line2">
+            <button type="left" id="left-btn" class="btn">
+                <i class="fa-solid fa-angle-left"></i>
+            </button>
+
+            <button type="play" id="play-btn" class="btn">
+                <i id="play-icon" class="fa-regular fa-circle-play"></i>
+            </button>
+
+            <button type="right" id="right-btn" class="btn">
+                <i class="fa-solid fa-angle-right"></i>
+            </button> 
+        </div>
+
+        <div class="line3">
+            <button type="high" id="high-btn" class="btn">
+                <i class="fa-solid fa-volume-high"></i>
+            </button>
+
+            <button type="low" id="low-btn" class="btn">
+                <i class="fa-solid fa-volume-low"></i>
+            </button>
+
+            
+        </div>
 </body>
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
 </html>     
