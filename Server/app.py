@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect
 from database import *
+from config import *
 
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -7,6 +8,7 @@ from spotipy.oauth2 import SpotifyOAuth
 
 
 app = Flask(__name__)
+app.secret_key = DB_KEY
 
 # Cliente de spotify, con los permisos necesarios
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
@@ -37,10 +39,13 @@ def register():
     # Verificar que no exista el username
     if username_exists(username):
         return jsonify({'success': False, 'message': 'Username already exists'}) # Devolver en el json 
+
+    # Hashear la contraseña con bcrypt
+    hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     
     
     # Registrar ususario
-    if register_user(username, email, password):
+    if register_user(username, email, hashed):
         return jsonify({'success': True, 'message': 'User registered successfully'}) # Devolver en el json con el mensaje de éxito
     else:
         return jsonify({'success': False, 'message': 'Registration failed'}) # Devolver en el json con el mensaje de error
@@ -55,14 +60,26 @@ def login():
     username = data.get('username')
     password = data.get('password')
 
+    cursor = get_db()[1]
+    cursor.execute("SELECT username, password_hash FROM users WHERE username = ?", (username,))
 
-    
-    # Login ususario
-    if login_user(username, password):
-        return jsonify({'success': True, 'message': 'User logged in successfully'}) # Devolver en el json con el mensaje de éxito
+    result = cursor.fetchone()
+    if result:
+        stored_username, stored_hash = result # Devuelve los resultado se la base de datos
+        
+        # Convertir a bytes si viene como string
+        if isinstance(stored_hash, str):
+            stored_hash = stored_hash.encode('utf-8')
+
+        if bcrypt.checkpw(password.encode('utf-8'), stored_hash):
+            session['username'] = username # Para guardar la sesión
+            return jsonify({'success': True, 'message': 'User logged in successfully'}) # Devolver en el json con el mensaje de éxito
+        else:
+            return jsonify({'success': False, 'message': 'Login failed'}) # Devolver en el json con el mensaje de error
     else:
-        return jsonify({'success': False, 'message': 'Login failed'}) # Devolver en el json con el mensaje de error
+        return jsonify({'success': False, 'message': 'User not found'})
     
+
 
 # endpoint de prueba para verificar los usuarios
 @app.route('/users')
@@ -76,6 +93,8 @@ def list_users():
 # Ventana de dashboard después de iniciar sesión
 @app.route('/dashboard')
 def dashboard():
+    if 'username' not in session:
+        return redirect('/') # Si no hay sesión, volver al index    
     return render_template('dashboard.html')
         
 

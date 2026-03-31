@@ -31,7 +31,7 @@ loginForm.addEventListener('submit', async (e) => {
     const data = await response.json();
 
     // Si todo salió bien, avanzar al a interfar
-    if (response.ok ) {
+    if (data.success ) {
         window.location.href = '/dashboard'; // Redirigir a la página del dashboard
     } else {
         alert('Login failed: ' + data.message); // Mostrar un mensaje de error
@@ -60,7 +60,7 @@ registerForm.addEventListener('submit', async (e) => {
     const data = await response.json();
 
     // Si todo salió bien, avanzar al a interfar
-    if (response.ok ) {
+    if ( data.success ) {
         window.location.href = '/dashboard'; // Redirigir a la página del dashboard
     } else {
         alert('Registration failed: ' + data.message); // Mostrar un mensaje de error
