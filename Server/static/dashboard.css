@@ -257,7 +257,7 @@ body{
    justify-content: center;
 }
 
-.forward-btn, .left-control-btn, .stop-btn, .right-control-btn, .backward-btn {
+.control-btn {
     background: none;
     border: none;
     cursor: pointer;
@@ -265,7 +265,7 @@ body{
     color: #7494ec;
 }
 
-.forward-btn:hover, .left-control-btn:hover, .stop-btn:hover, .right-control-btn:hover, .backward-btn:hover {
+.control-btn:hover {
     color: #5a7bc8;
 }
 

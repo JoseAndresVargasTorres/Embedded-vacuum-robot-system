@@ -72,33 +72,33 @@
 
         <!-- Botones para escoger el modo -->
          <div class="line4">
-            <button type="manual" id="manual-btn" class="btn">Manual Mode</button>
-            <button type="automatic" id="automatic-btn" class="btn">Automatic Mode</button>
+            <button  type="manual" id="manual-btn" class="btn">Manual Mode</button>
+            <button onclick="changeColor()" type="automatic" id="automatic-btn" class="btn">Automatic Mode</button>
         </div>
 
         <!-- Botones para controlar el robot de forma manual -->
         <div class="line5">
-            <button type="forward" id="forward-btn" class="forward-btn">
+            <button type="forward" id="forward-btn" class="control-btn">
                 <i class="fa-solid fa-arrow-up-long"></i>
             </button>
         </div>
         
         <div class="line6">
-            <button type="left" id="left-control-btn" class="left-control-btn">
+            <button type="left" id="left-control-btn" class="control-btn">
                 <i class="fa-solid fa-arrow-left-long"></i>
             </button>
 
-            <button type="stop" id="stop-btn" class="stop-btn">
+            <button type="stop" id="stop-btn" class="control-btn">
                 <i id="stop-icon" class="fa-solid fa-stop"></i>
             </button>
 
-            <button type="right" id="right-control-btn" class="right-control-btn">
+            <button type="right" id="right-control-btn" class="control-btn">
                 <i class="fa-solid fa-arrow-right-long"></i>
             </button>
         </div>
 
         <div class="line7">
-            <button type="backward" id="backward-btn" class="backward-btn">
+            <button type="backward" id="backward-btn" class="control-btn">
                 <i class="fa-solid fa-arrow-down-long"></i>
             </button>   
         </div>
@@ -106,7 +106,6 @@
 
     <div class ="container-map">
         <!-- Cuadro para ver el mapa -->
-
         <p id="map-info">Map</p>
         <hr> <!-- Línea horizontal para separar el título del contenido -->
         <div id="map-grid"></div> <!-- cuadrícual para el mapa -->

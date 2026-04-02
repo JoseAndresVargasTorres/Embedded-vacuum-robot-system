@@ -7,7 +7,8 @@ const lowBtn = document.getElementById('low-btn');
 const stopBtn = document.getElementById('stop-btn');  
 const stopIcon = document.getElementById('stop-icon'); 
 const grid = document.getElementById('map-grid');
-const totalCells = 30 * 8; // 30 columnas x 10 filas
+const totalCells = 30 * 8; 
+const controlBtns = document.querySelectorAll('.control-btn');
 
 // Variables globales para la música
 let currentVolumen = 15;
@@ -66,7 +67,8 @@ lowBtn.addEventListener('click', function() {
 getMusicInfo();
 setInterval(getMusicInfo, 5000); // Actualizar la información cada 5 segundos
 
-// Para presionar un botón del modo de control y que este cambie de color
+
+// Para presionar un botón del modo de control manual y que este cambie de color
 document.querySelectorAll('.btn').forEach(btn => {
     btn.addEventListener('click', function() {
         // Eliminar la clase 'selected' de todos los botones
@@ -87,6 +89,15 @@ stopBtn.addEventListener('click', function() {
     }
 })
 
+// Función para que cuando los botones se deshabilitene en modo automático
+function changeColor() {
+    controlBtns.forEach(btn => {
+        btn.style.color = '#DEDCE0' //'#d3d3d3'; // Cambia el color a gris
+        btn.disabled = true; // Deshabilita el botón
+    });
+}
+
+// Para la cuadrícula del mapa
 for (let i = 0; i < totalCells; i++) {
     const cell = document.createElement('div');
     cell.classList.add('map-cell');
