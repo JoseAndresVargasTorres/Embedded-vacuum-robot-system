@@ -3,7 +3,11 @@ const playIcon = document.getElementById('play-icon');
 const leftBtn = document.getElementById('left-btn');
 const rightBtn = document.getElementById('right-btn');
 const highBtn = document.getElementById('high-btn'); 
-const lowBtn = document.getElementById('low-btn');    
+const lowBtn = document.getElementById('low-btn'); 
+const stopBtn = document.getElementById('stop-btn');  
+const stopIcon = document.getElementById('stop-icon'); 
+const grid = document.getElementById('map-grid');
+const totalCells = 30 * 8; // 30 columnas x 10 filas
 
 // Variables globales para la música
 let currentVolumen = 15;
@@ -61,3 +65,33 @@ lowBtn.addEventListener('click', function() {
 // Llamada para que siempre se busque la información de la música al cargar la página
 getMusicInfo();
 setInterval(getMusicInfo, 5000); // Actualizar la información cada 5 segundos
+
+// Para presionar un botón del modo de control y que este cambie de color
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        // Eliminar la clase 'selected' de todos los botones
+        document.querySelectorAll('.btn').forEach(b => b.classList.remove('selected'));
+        // Agregar la clase 'selected' al botón presionado
+        this.classList.add('selected');
+    });
+})
+
+// El botón de play va a cambiar dependiendo de si la roomba está detenida o no
+stopBtn.addEventListener('click', function() {
+    if (stopIcon.classList.contains('fa-stop')) {
+        stopIcon.classList.remove('fa-stop');
+        stopIcon.classList.add('fa-play');
+    } else {
+        stopIcon.classList.remove('fa-play');
+        stopIcon.classList.add('fa-stop');
+    }
+})
+
+for (let i = 0; i < totalCells; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('map-cell');
+    cell.addEventListener('click', function() {
+        this.classList.toggle('painted');
+    });
+    grid.appendChild(cell);
+}

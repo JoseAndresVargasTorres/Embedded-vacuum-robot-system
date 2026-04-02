@@ -39,7 +39,7 @@ body{
     bottom: 20px;
     right: 25px;
     width: 250px;
-    height: 170px;
+    height: 230px;
     background: #fff;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
@@ -47,7 +47,7 @@ body{
 
     /* Para acomodar los botones dentro del contenedor */
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
 
     /* Espacio entre líneas */
@@ -55,6 +55,8 @@ body{
 
     /* Para trabajar con respecto a files */
     flex-direction: column;
+
+    align-items: center;
  }
 
  #play-btn{
@@ -202,4 +204,114 @@ body{
    color: #333;
 } 
 
+
+/* Contenedor del control de la roomba */
+.container-control{
+   position: fixed;
+   top: 100px;
+   right: 730px;
+   width: 410px;
+   height: 230px;
+   background: #fff;
+   border-radius: 15px;
+   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+   padding: 10px;  
+   
+   /* Para acomodar los botones */
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 10px;
+}
+
+.btn{
+   width: auto;
+   padding: 8px 20px;
+   height: 36px;
+   background: #7494ec;
+   border-radius: 8px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   border: none;
+   outline: none;
+   cursor: pointer;
+   font-size: 16px;
+   color: #fff;
+   font-weight: 600;
+ }
+
+.btn:hover{
+   color: #4a6fd4
+ }
+
+.btn:active {
+   background: #4a6fd4;  /* color más oscuro al presionar */
+}
+
+.btn.selected {
+   background: #4a6fd4;
+}
+
+.line4{
+   display: flex;
+   gap: 10px;
+   justify-content: center;
+}
+
+.forward-btn, .left-control-btn, .stop-btn, .right-control-btn, .backward-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #7494ec;
+}
+
+.forward-btn:hover, .left-control-btn:hover, .stop-btn:hover, .right-control-btn:hover, .backward-btn:hover {
+    color: #5a7bc8;
+}
+
+.line5, .line6, .line7 {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+
+/* Contenedor para visualizar el mapa */
+.container-map{
+   position: fixed;
+   top: 100px;
+   right: 25px;
+   width: 683px;
+   height: 230px;
+   background: #fff;
+   border-radius: 15px;
+   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+   padding: 10px;     
+}
+
+#map-info{
+   text-align: center;   
+   font-size: 15px;
+   font-weight: 600; /* Para que sea negrita */
+   color: #333;
+} 
+
+#map-grid {
+    display: grid;
+    grid-template-columns: repeat(30, 1fr); /* 30 columnas */
+    gap: 2px;
+    margin-top: 8px;
+}
+
+.map-cell {
+    width: 100%;
+    aspect-ratio: 1;  /* cuadrado perfecto */
+    background: #e0e0e0;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.map-cell.painted {
+    background: #7494ec;  /* color al pintar */
+}
 
