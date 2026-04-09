@@ -18,6 +18,14 @@
 #define LED_OBSTACULO 13
 #define LED_SISTEMA   26
 
+/* Motor izquierdo - L293D Canal 1 */
+#define IN1_IZQ       17
+#define IN2_IZQ       27
+
+/* Motor derecho - L293D Canal 2 */
+#define IN3_DER       22
+#define IN4_DER       23
+
 /* ---- GPIO helpers ---- */
 static void gpio_export(int pin) {
     char path[64];
@@ -61,18 +69,22 @@ static long tiempo_us() {
 
 /* ---- INICIALIZACIÓN ---- */
 void control_init() {
+    /* Motor izquierdo */
+    gpio_export(IN1_IZQ); gpio_set_direction(IN1_IZQ, "out"); gpio_write(IN1_IZQ, 0);
+    gpio_export(IN2_IZQ); gpio_set_direction(IN2_IZQ, "out"); gpio_write(IN2_IZQ, 0);
+
+    /* Motor derecho */
+    gpio_export(IN3_DER); gpio_set_direction(IN3_DER, "out"); gpio_write(IN3_DER, 0);
+    gpio_export(IN4_DER); gpio_set_direction(IN4_DER, "out"); gpio_write(IN4_DER, 0);
+
     /* Sensor frontal */
-    gpio_export(TRIG_FRONTAL);
-    gpio_set_direction(TRIG_FRONTAL, "out");
-    gpio_export(ECHO_FRONTAL);
-    gpio_set_direction(ECHO_FRONTAL, "in");
+    gpio_export(TRIG_FRONTAL); gpio_set_direction(TRIG_FRONTAL, "out");
+    gpio_export(ECHO_FRONTAL); gpio_set_direction(ECHO_FRONTAL, "in");
     gpio_write(TRIG_FRONTAL, 0);
 
     /* Sensor lateral */
-    gpio_export(TRIG_LATERAL);
-    gpio_set_direction(TRIG_LATERAL, "out");
-    gpio_export(ECHO_LATERAL);
-    gpio_set_direction(ECHO_LATERAL, "in");
+    gpio_export(TRIG_LATERAL); gpio_set_direction(TRIG_LATERAL, "out");
+    gpio_export(ECHO_LATERAL); gpio_set_direction(ECHO_LATERAL, "in");
     gpio_write(TRIG_LATERAL, 0);
 
     /* LEDs */
@@ -80,8 +92,6 @@ void control_init() {
     gpio_export(LED_MANUAL);    gpio_set_direction(LED_MANUAL,    "out");
     gpio_export(LED_OBSTACULO); gpio_set_direction(LED_OBSTACULO, "out");
     gpio_export(LED_SISTEMA);   gpio_set_direction(LED_SISTEMA,   "out");
-
-    /* LED de sistema encendido */
     gpio_write(LED_SISTEMA, 1);
 
     usleep(500000);
@@ -92,29 +102,24 @@ static float medir_distancia(int trig, int echo) {
     long inicio, fin;
     long timeout = 30000;
 
-    /* Pulso TRIG de 10us */
     gpio_write(trig, 0);
     usleep(2);
     gpio_write(trig, 1);
     usleep(10);
     gpio_write(trig, 0);
 
-    /* Esperar que ECHO suba a 1 */
     inicio = tiempo_us();
     while (gpio_read(echo) == 0) {
         if (tiempo_us() - inicio > timeout) return -1.0f;
     }
     inicio = tiempo_us();
 
-    /* Esperar que ECHO baje a 0 */
     while (gpio_read(echo) == 1) {
         if (tiempo_us() - inicio > timeout) return -1.0f;
     }
     fin = tiempo_us();
 
-    /* distancia = (tiempo * velocidad_sonido) / 2 */
-    float distancia = (fin - inicio) * 0.0343f / 2.0f;
-    return distancia;
+    return (fin - inicio) * 0.0343f / 2.0f;
 }
 
 float sensor_distancia_frontal() {
@@ -125,12 +130,31 @@ float sensor_distancia_lateral() {
     return medir_distancia(TRIG_LATERAL, ECHO_LATERAL);
 }
 
-/* ---- MOTORES (pendiente hardware L298N) ---- */
-void motor_adelante(int velocidad)  { printf("Motor: adelante %d\n", velocidad); }
-void motor_atras(int velocidad)     { printf("Motor: atras %d\n", velocidad); }
-void motor_izquierda(int velocidad) { printf("Motor: izquierda %d\n", velocidad); }
-void motor_derecha(int velocidad)   { printf("Motor: derecha %d\n", velocidad); }
-void motor_detener()                { printf("Motor: detenido\n"); }
+/* ---- MOTORES L293D sin PWM (enable fijo a 5V) ---- */
+void motor_adelante(int velocidad) {
+    gpio_write(IN1_IZQ, 1); gpio_write(IN2_IZQ, 0);
+    gpio_write(IN3_DER, 1); gpio_write(IN4_DER, 0);
+}
+
+void motor_atras(int velocidad) {
+    gpio_write(IN1_IZQ, 0); gpio_write(IN2_IZQ, 1);
+    gpio_write(IN3_DER, 0); gpio_write(IN4_DER, 1);
+}
+
+void motor_izquierda(int velocidad) {
+    gpio_write(IN1_IZQ, 0); gpio_write(IN2_IZQ, 1);
+    gpio_write(IN3_DER, 1); gpio_write(IN4_DER, 0);
+}
+
+void motor_derecha(int velocidad) {
+    gpio_write(IN1_IZQ, 1); gpio_write(IN2_IZQ, 0);
+    gpio_write(IN3_DER, 0); gpio_write(IN4_DER, 1);
+}
+
+void motor_detener() {
+    gpio_write(IN1_IZQ, 0); gpio_write(IN2_IZQ, 0);
+    gpio_write(IN3_DER, 0); gpio_write(IN4_DER, 0);
+}
 
 /* ---- LEDS ---- */
 void led_autonomo(int estado)  { gpio_write(LED_AUTONOMO,  estado); }
