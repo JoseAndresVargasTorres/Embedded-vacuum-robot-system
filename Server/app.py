@@ -132,5 +132,13 @@ def current():
     return jsonify(sp.current_playback());
 
 
+# Endpoint para verificar conexión con la raspberry
+@app.route('/status')
+def status():
+    return jsonify({
+        "message": "Raspberry Pi 4 is connected.",
+        "status": "connected"
+    })
+
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0") 

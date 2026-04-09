@@ -17,6 +17,11 @@ body{
 
 }
 
+.connection-status p {
+    color: green;       /* o red si falla */
+    font-size: 0.9rem;
+}
+
 .container-title{
     text-align: center;
     padding-top: 40px;

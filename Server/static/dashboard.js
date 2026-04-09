@@ -106,3 +106,19 @@ for (let i = 0; i < totalCells; i++) {
     });
     grid.appendChild(cell);
 }
+
+// Para verificar conexión con la rasp
+async function checkConnection() {
+    try {
+        const response = await fetch('/status');
+        const data = await response.json();
+        
+        document.getElementById('connection-status').innerHTML = 
+            `<p> ${data.message}</p>`;
+    } catch (error) {
+        document.getElementById('connection-status').innerHTML = 
+            `<p> Sin conexión con la Raspberry</p>`;
+    }
+}
+
+checkConnection();
