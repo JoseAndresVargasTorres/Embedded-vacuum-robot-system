@@ -1,31 +1,47 @@
-SUMMARY = "Servidor web para control remoto del robot aspiradora"
-DESCRIPTION = "Servidor Flask que expone una API REST para controlar el robot"
-LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
+SUMMARY = "Servidor web Flask del robot aspiradora"
+LICENSE = "CLOSED"
 
 SRC_URI = "file://server.py \
-           file://robot-server.init"
+           file://robot-server.init \
+           file://templates/index.html \
+           file://templates/dashboard.html \
+           file://static/style.css \
+           file://static/dashboard.css \
+           file://static/script.js \
+           file://static/dashboard.js \
+           file://music/Devorame.mp3 \
+           file://music/Deseandote.mp3 \
+           "
 
 S = "${WORKDIR}"
 
-# Dependencias en tiempo de compilacion
-DEPENDS = "libcontrol"
+RDEPENDS:${PN} = "python3 python3-flask python3-bcrypt mpg123 alsa-utils"
 
-# Dependencias en tiempo de ejecucion
-RDEPENDS:${PN} = "libcontrol python3 python3-flask"
+FILES:${PN} += "/opt/robot-server /opt/robot-server/* /opt/robot-server/**"
 
 do_install() {
-    # Instalar servidor
-    install -d ${D}${bindir}
-    install -m 0755 ${WORKDIR}/server.py ${D}${bindir}/server.py
+    install -d ${D}/opt/robot-server
+    install -d ${D}/opt/robot-server/templates
+    install -d ${D}/opt/robot-server/static
+    install -d ${D}/opt/robot-server/music
 
-    # Instalar script de inicio
+    install -m 0755 ${WORKDIR}/server.py ${D}/opt/robot-server/server.py
+
+    install -m 0644 ${WORKDIR}/templates/index.html     ${D}/opt/robot-server/templates/
+    install -m 0644 ${WORKDIR}/templates/dashboard.html ${D}/opt/robot-server/templates/
+
+    install -m 0644 ${WORKDIR}/static/style.css     ${D}/opt/robot-server/static/
+    install -m 0644 ${WORKDIR}/static/dashboard.css ${D}/opt/robot-server/static/
+    install -m 0644 ${WORKDIR}/static/script.js     ${D}/opt/robot-server/static/
+    install -m 0644 ${WORKDIR}/static/dashboard.js  ${D}/opt/robot-server/static/
+
+    install -m 0644 ${WORKDIR}/music/Devorame.mp3 ${D}/opt/robot-server/music/
+    install -m 0644 ${WORKDIR}/music/Deseandote.mp3 ${D}/opt/robot-server/music/
+
     install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${WORKDIR}/robot-server.init ${D}${sysconfdir}/init.d/robot-server
 }
 
 inherit update-rc.d
-
-# Iniciar automáticamente en runlevel 5
 INITSCRIPT_NAME = "robot-server"
 INITSCRIPT_PARAMS = "defaults 90"
