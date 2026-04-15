@@ -1,22 +1,28 @@
-SUMMARY = "Biblioteca de control de hardware para robot aspiradora"
-DESCRIPTION = "Biblioteca dinamica que encapsula el acceso a motores, sensores, LEDs y audio"
-LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
+SUMMARY = "Biblioteca de control del robot"
+LICENSE = "CLOSED"
 
 SRC_URI = "file://libcontrol.c \
            file://libcontrol.h \
-           file://CMakeLists.txt"
+           file://CMakeLists.txt \
+           "
 
 S = "${WORKDIR}"
 
 inherit cmake
 
-# Dependencias en tiempo de compilacion
-DEPENDS = "libgpiod"
+EXTRA_OECMAKE = ""
 
-# Dependencias en tiempo de ejecucion
-RDEPENDS:${PN} = "libgpiod mpg123"
+do_install() {
+    install -d ${D}${libdir}
+    install -m 0755 ${B}/libcontrol.so ${D}${libdir}/libcontrol.so
 
-# Incluir el .so en el paquete principal
-SOLIBS = ".so"
-FILES_SOLIBSDEV = ""
+    install -d ${D}${includedir}
+    install -m 0644 ${WORKDIR}/libcontrol.h ${D}${includedir}/libcontrol.h
+}
+
+FILES:${PN} = "${libdir}/libcontrol.so ${includedir}/libcontrol.h"
+FILES:${PN}-dev = ""
+FILES:${PN}-dbg = ""
+FILES:${PN}-staticdev = ""
+
+INSANE_SKIP:${PN} = "dev-elf"

@@ -8,91 +8,126 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
+
     <div class="container-title">
-        <div id="connection-status" class="connection-status">
-            <p></p>
-        </div>
-        <div id="dashboard" class="form-box dashboard">
-            <h1>Control System!</h1>
-        </div>
+        <div id="connection-status" class="connection-status"><p></p></div>
+        <h1>🤖 Robot Control System</h1>
     </div>
 
-    <div class="container-music">
-        <div class="line1">
+    <div class="main-grid">
+
+        <div class="container-control">
+            <p class="panel-title">🕹️ Control</p>
+            <hr>
+            <div class="line4">
+                <button type="button" id="manual-btn" class="btn">Manual</button>
+                <button type="button" id="automatic-btn" class="btn">Automático</button>
+            </div>
+            <div class="velocidad-container">
+                <label>Velocidad: <span id="velocidad-display">50%</span></label>
+                <input type="range" id="velocidad-slider" min="0" max="100" value="50">
+            </div>
+            <div class="dpad">
+                <div class="dpad-row">
+                    <button type="button" id="forward-btn" class="control-btn" title="Adelante">
+                        <i class="fa-solid fa-arrow-up-long"></i>
+                    </button>
+                </div>
+                <div class="dpad-row">
+                    <button type="button" id="left-control-btn" class="control-btn" title="Izquierda">
+                        <i class="fa-solid fa-arrow-left-long"></i>
+                    </button>
+                    <button type="button" id="stop-btn" class="control-btn stop" title="Detener">
+                        <i class="fa-solid fa-stop"></i>
+                    </button>
+                    <button type="button" id="right-control-btn" class="control-btn" title="Derecha">
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </button>
+                </div>
+                <div class="dpad-row">
+                    <button type="button" id="backward-btn" class="control-btn" title="Atrás">
+                        <i class="fa-solid fa-arrow-down-long"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-map">
+            <p class="panel-title">🗺️ Mapa de recorrido</p>
+            <hr>
+            <div id="map-grid"></div>
+        </div>
+
+        <div class="container-sensors">
+            <p class="panel-title">📡 Sensores HC-SR04</p>
+            <hr>
+            <div class="sensor-row">
+                <span>Frontal:</span>
+                <span id="sensor-frontal">-- cm</span>
+                <div id="barra-frontal" class="barra-sensor"></div>
+            </div>
+            <div class="sensor-row">
+                <span>Lateral:</span>
+                <span id="sensor-lateral">-- cm</span>
+                <div id="barra-lateral" class="barra-sensor"></div>
+            </div>
+            <p id="alerta-sensor" class="alerta-sensor"></p>
+        </div>
+
+        <div class="container-leds">
+            <p class="panel-title">💡 Estado LEDs</p>
+            <hr>
+            <div class="leds-grid">
+                <div class="led-item">
+                    <div class="led-circle" id="led-sistema"></div>
+                    <span>Sistema</span>
+                </div>
+                <div class="led-item">
+                    <div class="led-circle" id="led-manual"></div>
+                    <span>Manual</span>
+                </div>
+                <div class="led-item">
+                    <div class="led-circle" id="led-autonomo"></div>
+                    <span>Autónomo</span>
+                </div>
+                <div class="led-item">
+                    <div class="led-circle" id="led-obstaculo"></div>
+                    <span>Obstáculo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-music">
+            <p class="panel-title">🎵 Música</p>
+            <hr>
             <select id="song-select">
                 <option value="">-- Seleccionar canción --</option>
             </select>
-            <h2 id="song-name">Song Title</h2>
-            <p id="song-artist">mpg123</p>
-        </div>
+            <h2 id="song-name">Sin canción</h2>
 
-        <div class="line2">
-            <button type="button" id="left-btn">
-                <i class="fa-solid fa-angle-left"></i>
-            </button>
-            <button type="button" id="play-btn">
-                <i id="play-icon" class="fa-regular fa-circle-play"></i>
-            </button>
-            <button type="button" id="right-btn">
-                <i class="fa-solid fa-angle-right"></i>
-            </button>
-        </div>
+            <div class="line2">
+                <!-- Anterior -->
+                <button type="button" id="prev-btn" title="Anterior">
+                    <i class="fa-solid fa-backward-step"></i>
+                </button>
+                <!-- Pausa / Play -->
+                <button type="button" id="play-btn" title="Reproducir/Pausar">
+                    <i id="play-icon" class="fa-solid fa-play"></i>
+                </button>
+                <!-- Siguiente -->
+                <button type="button" id="next-btn" title="Siguiente">
+                    <i class="fa-solid fa-forward-step"></i>
+                </button>
+            </div>
 
-        <div class="line3">
-            <button type="button" id="high-btn">
-                <i class="fa-solid fa-volume-high"></i>
-            </button>
-            <button type="button" id="low-btn">
+            <div class="volumen-container">
                 <i class="fa-solid fa-volume-low"></i>
-            </button>
-        </div>
-    </div>
-
-    <div class="container-leds">
-        <p id="leds-info">LEDs Status</p>
-        <hr>
-    </div>
-
-    <div class="container-sensors">
-        <p id="sensors-info">Sensors Status</p>
-        <hr>
-    </div>
-
-    <div class="container-control">
-        <div class="line4">
-            <button type="button" id="manual-btn" class="btn">Manual Mode</button>
-            <button type="button" id="automatic-btn" class="btn">Automatic Mode</button>
+                <input type="range" id="volumen-slider" min="0" max="100" value="50">
+                <i class="fa-solid fa-volume-high"></i>
+            </div>
+            <p id="volumen-display">Volumen: 50%</p>
         </div>
 
-        <div class="line5">
-            <button type="button" id="forward-btn" class="control-btn">
-                <i class="fa-solid fa-arrow-up-long"></i>
-            </button>
-        </div>
-
-        <div class="line6">
-            <button type="button" id="left-control-btn" class="control-btn">
-                <i class="fa-solid fa-arrow-left-long"></i>
-            </button>
-            <button type="button" id="stop-btn" class="control-btn">
-                <i id="stop-icon" class="fa-solid fa-stop"></i>
-            </button>
-            <button type="button" id="right-control-btn" class="control-btn">
-                <i class="fa-solid fa-arrow-right-long"></i>
-            </button>
-        </div>
-
-        <div class="line7">
-            <button type="button" id="backward-btn" class="control-btn">
-                <i class="fa-solid fa-arrow-down-long"></i>
-            </button>
-        </div>
-    </div>
-
-    <div class="container-map">
-        <p id="map-info">Map</p>
-        <hr>
-        <div id="map-grid"></div>
     </div>
 
     <script src="{{ url_for('static', filename='dashboard.js') }}"></script>

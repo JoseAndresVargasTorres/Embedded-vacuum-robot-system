@@ -17,7 +17,16 @@ S = "${WORKDIR}"
 
 RDEPENDS:${PN} = "python3 python3-flask python3-bcrypt mpg123 alsa-utils"
 
-FILES:${PN} += "/opt/robot-server /opt/robot-server/* /opt/robot-server/**"
+FILES:${PN} += " \
+    /opt/robot-server \
+    /opt/robot-server/server.py \
+    /opt/robot-server/templates \
+    /opt/robot-server/templates/* \
+    /opt/robot-server/static \
+    /opt/robot-server/static/* \
+    /opt/robot-server/music \
+    /opt/robot-server/music/* \
+"
 
 do_install() {
     install -d ${D}/opt/robot-server
@@ -35,7 +44,7 @@ do_install() {
     install -m 0644 ${WORKDIR}/static/script.js     ${D}/opt/robot-server/static/
     install -m 0644 ${WORKDIR}/static/dashboard.js  ${D}/opt/robot-server/static/
 
-    install -m 0644 ${WORKDIR}/music/Devorame.mp3 ${D}/opt/robot-server/music/
+    install -m 0644 ${WORKDIR}/music/Devorame.mp3   ${D}/opt/robot-server/music/
     install -m 0644 ${WORKDIR}/music/Deseandote.mp3 ${D}/opt/robot-server/music/
 
     install -d ${D}${sysconfdir}/init.d
