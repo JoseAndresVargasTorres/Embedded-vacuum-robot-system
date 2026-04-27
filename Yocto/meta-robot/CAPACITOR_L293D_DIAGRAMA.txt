@@ -1,0 +1,146 @@
+================================================================================
+                    DIAGRAMA: CAPACITOR EN L293D
+================================================================================
+
+VISTA SUPERIOR DEL L293D (DIP-16)
+
+                         +5V o 12V (VCC) del motor
+                              ↓
+        ┌───────────────────────┼───────────────────────┐
+        │                       │                       │
+        │                    [100µF]                 [10µF]
+        │                    25V+                    25V+
+        │                       │                       │
+        │                      GND                     GND
+        │                       │                       │
+    ┌───┴───┬───┬───┬───┬───┬───┴───┬───┬───┬───┬───┬───┬───┐
+    │ 1  2  │ 3 │ 4 │ 5 │ 6 │ 7  8 │ 9 │10 │11 │12 │13 │14 │
+    │       │   │   │   │   │      │   │   │   │   │   │   │
+    ├───────┼───┼───┼───┼───┼──────┼───┼───┼───┼───┼───┼───┤
+    │ IN1   │OUT│GND│GND│OUT│ VCC  │IN2│OUT│GND│GND│OUT│IN3│
+    │       │1  │   │   │2  │(Pin 8)│   │3  │   │   │4  │   │
+    └───────┴───┴───┴───┴───┴──────┴───┴───┴───┴───┴───┴───┘
+
+
+DIAGRAMA DE CONEXIÓN DETALLADO
+================================================================================
+
+                    +12V (Alimentación Motor)
+                         │
+                         │
+          ┌──────────────┴─────────────────┐
+          │                                │
+       [100µF]                          [10µF]
+      (Electrolítico)                (Cerámico)
+      Positivo arriba                Positivo arriba
+          │                                │
+          ├────────────────┬───────────────┤
+                           │
+                       PIN 8 (VCC)
+                      [L293D]
+                           │
+          ┌────────────────┼───────────────┐
+          │                │               │
+      PIN 4 (GND)      PIN 5 (GND)    Otros GND
+          │                │               │
+          └────────────────┴───────────────┘
+                           │
+                          GND común del circuito
+
+
+TABLA DE CONEXIONES L293D
+================================================================================
+
+PIN  │ NOMBRE    │ CONEXIÓN
+─────┼───────────┼──────────────────────────────────────────────────
+  1  │ IN1       │ GPIO 17 (Raspberry Pi)
+  2  │ OUT1      │ Motor Izquierdo (+)
+  3  │ OUT2      │ Motor Izquierdo (-)
+  4  │ GND       │ TIERRA (conectar a capacitor)
+  5  │ GND       │ TIERRA (conectar a capacitor)
+  6  │ OUT3      │ Motor Derecho (+)
+  7  │ OUT4      │ Motor Derecho (-)
+  8  │ VCC (⭐)  │ +12V (conectar capacitores aquí)
+  9  │ IN2       │ GPIO 27 (Raspberry Pi)
+ 10  │ GND       │ TIERRA
+ 11  │ GND       │ TIERRA
+ 12  │ OUT3      │ Motor Derecho (+)
+ 13  │ IN3       │ GPIO 22 (Raspberry Pi)
+ 14  │ IN4       │ GPIO 23 (Raspberry Pi)
+ 15  │ OUT3      │ Motor Derecho (+)
+ 16  │ VCC       │ +5V (PWM control - Raspberry Pi)
+
+
+LISTA DE MATERIALES
+================================================================================
+
+✓ Capacitor 1: 100µF, 25V mínimo (ELECTROLÍTICO)
+✓ Capacitor 2: 10µF, 25V mínimo (Cerámico - opcional pero recomendado)
+✓ Cables: AWG 18 mínimo para las conexiones
+✓ Soldador y estaño
+
+
+PROCEDIMIENTO DE INSTALACIÓN
+================================================================================
+
+1. APAGA TODO (desconecta 12V y Raspberry Pi)
+
+2. IDENTIFICA los pines del L293D:
+   - PIN 8 = VCC (arriba a la derecha)
+   - PIN 4 y 5 = GND (abajo, centrales)
+
+3. PREPARA los capacitores:
+   - Corta las patas a ~1cm
+   - Capacitor 100µF: marca la pata ROJA (positiva)
+   - Capacitor 10µF: marca la pata ROJA (positiva)
+
+4. SUELDA:
+   a) 100µF positivo → PIN 8 (VCC)
+   b) 10µF positivo → PIN 8 (VCC)
+   c) Ambos negativos → PIN 4 o PIN 5 (GND)
+
+5. USA CABLES CORTOS (máximo 2cm entre patas y chip)
+
+6. ISOLADELLOS: Cubre con cinta aislante o tubo termorretráctil
+
+7. PRUEBA: Con multímetro en modo capacitancia, debería leer:
+   - Entre PIN 8 y GND: ~110µF (100µF + 10µF)
+
+
+DIAGRAMA ESQUEMÁTICO SIMPLIFICADO
+================================================================================
+
+     +12V
+      │
+      ├──[100µF]──┐
+      │           │
+      ├──[10µF]───┤
+      │           │
+      └─ PIN 8    │
+        (L293D)   │
+      ┌─ PIN 4 ───┤
+      │ (GND)     │
+      │           │
+      ├─ PIN 5 ───┤
+      │ (GND)     │
+      │           │
+      └───────────┘
+         (GND)
+
+
+VERIFICACIÓN FINAL
+================================================================================
+
+Antes de encender:
+  ☐ ¿Los capacitores están bien soldados?
+  ☐ ¿Los cables son cortos y gruesos?
+  ☐ ¿No hay cortocircuito entre PIN 8 y GND?
+  ☐ ¿El L293D está limpio de flux de soldadura?
+  ☐ ¿La polaridad del capacitor 100µF es correcta?
+
+Después de encender:
+  ☐ ¿El L293D está tibio, NO caliente?
+  ☐ ¿El motor funciona a los 9+ segundos?
+  ☐ ¿No hay "sirve-no sirve"?
+
+================================================================================
