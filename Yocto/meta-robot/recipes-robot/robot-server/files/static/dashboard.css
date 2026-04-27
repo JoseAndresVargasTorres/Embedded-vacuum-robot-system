@@ -169,6 +169,19 @@ body {
     flex-direction: column;
 }
 
+#mapa-scroll {
+    width: 100%;
+    height: 220px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+
+#mapa-canvas {
+    display: block;
+}
+
 #map-grid {
     display: grid;
     grid-template-columns: repeat(30, 1fr);
@@ -290,7 +303,7 @@ body {
     align-items: center;
 }
 
-#play-btn, #left-btn, #right-btn {
+#play-btn, #prev-btn, #next-btn {
     background: none;
     border: none;
     cursor: pointer;
@@ -299,7 +312,7 @@ body {
     transition: color 0.2s, transform 0.1s;
 }
 
-#play-btn:hover, #left-btn:hover, #right-btn:hover {
+#play-btn:hover, #prev-btn:hover, #next-btn:hover {
     color: #5a7bc8;
     transform: scale(1.1);
 }
@@ -321,3 +334,23 @@ body {
     font-size: 11px;
     color: #888;
 }
+
+/* ── Aspiradora ── */
+.aspiradora-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+}
+
+.aspiradora-off {
+    background: #aaa;
+}
+
+.aspiradora-on {
+    background: #4caf50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.aspiradora-on:hover  { background: #388e3c; }
+.aspiradora-off:hover { background: #888; }

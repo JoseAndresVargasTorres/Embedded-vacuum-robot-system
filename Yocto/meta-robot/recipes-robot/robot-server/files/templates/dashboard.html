@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 <body>
-
     <div class="container-title">
         <div id="connection-status" class="connection-status"><p></p></div>
         <h1>🤖 Robot Control System</h1>
@@ -50,12 +49,24 @@
                     </button>
                 </div>
             </div>
+            <div class="aspiradora-container">
+                <button type="button" id="aspiradora-btn" class="btn aspiradora-off">
+                    🌀 Aspiradora: <span id="aspiradora-estado">OFF</span>
+                </button>
+            </div>
         </div>
 
         <div class="container-map">
-            <p class="panel-title">🗺️ Mapa de recorrido</p>
+            <p class="panel-title">🗺️ Mapa de Recorrido (Líneas de Obstáculos)</p>
             <hr>
-            <div id="map-grid"></div>
+            <div id="mapa-scroll">
+                <canvas id="mapa-canvas" width="1200" height="600" style="background-color: #fff;"></canvas>
+            </div>
+            <div id="mapa-stats">
+                <p>Segmentos detectados: <span id="stat-segmentos">0</span></p>
+                <p>Frontal: <span id="stat-frontal">0</span> | Derecha: <span id="stat-derecha">0</span> | Izquierda: <span id="stat-izquierda">0</span></p>
+            </div>
+            <button type="button" id="resetear-mapa-btn" class="btn">Resetear Mapa</button>
         </div>
 
         <div class="container-sensors">
@@ -67,9 +78,14 @@
                 <div id="barra-frontal" class="barra-sensor"></div>
             </div>
             <div class="sensor-row">
-                <span>Lateral:</span>
-                <span id="sensor-lateral">-- cm</span>
-                <div id="barra-lateral" class="barra-sensor"></div>
+                <span>Izquierda:</span>
+                <span id="sensor-izquierda">-- cm</span>
+                <div id="barra-izquierda" class="barra-sensor"></div>
+            </div>
+            <div class="sensor-row">
+                <span>Derecha:</span>
+                <span id="sensor-derecha">-- cm</span>
+                <div id="barra-derecha" class="barra-sensor"></div>
             </div>
             <p id="alerta-sensor" class="alerta-sensor"></p>
         </div>
@@ -104,22 +120,17 @@
                 <option value="">-- Seleccionar canción --</option>
             </select>
             <h2 id="song-name">Sin canción</h2>
-
             <div class="line2">
-                <!-- Anterior -->
                 <button type="button" id="prev-btn" title="Anterior">
                     <i class="fa-solid fa-backward-step"></i>
                 </button>
-                <!-- Pausa / Play -->
                 <button type="button" id="play-btn" title="Reproducir/Pausar">
                     <i id="play-icon" class="fa-solid fa-play"></i>
                 </button>
-                <!-- Siguiente -->
                 <button type="button" id="next-btn" title="Siguiente">
                     <i class="fa-solid fa-forward-step"></i>
                 </button>
             </div>
-
             <div class="volumen-container">
                 <i class="fa-solid fa-volume-low"></i>
                 <input type="range" id="volumen-slider" min="0" max="100" value="50">
