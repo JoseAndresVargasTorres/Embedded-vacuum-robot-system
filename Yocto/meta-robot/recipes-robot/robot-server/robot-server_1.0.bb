@@ -11,6 +11,10 @@ SRC_URI = "file://server.py \
            file://static/dashboard.js \
            file://music/Devorame.mp3 \
            file://music/Deseandote.mp3 \
+           file://sounds/Inicio.mp3 \
+           file://sounds/Manual.mp3 \
+           file://sounds/Autonomo.mp3 \
+           file://sounds/Obstacle.mp3 \
            "
 
 S = "${WORKDIR}"
@@ -26,6 +30,8 @@ FILES:${PN} += " \
     /opt/robot-server/static/* \
     /opt/robot-server/music \
     /opt/robot-server/music/* \
+    /opt/robot-server/sounds \
+    /opt/robot-server/sounds/* \
 "
 
 do_install() {
@@ -46,6 +52,12 @@ do_install() {
 
     install -m 0644 ${WORKDIR}/music/Devorame.mp3   ${D}/opt/robot-server/music/
     install -m 0644 ${WORKDIR}/music/Deseandote.mp3 ${D}/opt/robot-server/music/
+
+    install -d ${D}/opt/robot-server/sounds
+    install -m 0644 ${WORKDIR}/sounds/Inicio.mp3   ${D}/opt/robot-server/sounds/
+    install -m 0644 ${WORKDIR}/sounds/Manual.mp3   ${D}/opt/robot-server/sounds/
+    install -m 0644 ${WORKDIR}/sounds/Autonomo.mp3 ${D}/opt/robot-server/sounds/
+    install -m 0644 ${WORKDIR}/sounds/Obstacle.mp3 ${D}/opt/robot-server/sounds/
 
     install -d ${D}${sysconfdir}/init.d
     install -m 0755 ${WORKDIR}/robot-server.init ${D}${sysconfdir}/init.d/robot-server

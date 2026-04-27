@@ -3,11 +3,11 @@ case "$1" in
     start)
         echo "Iniciando robot-server..."
         cd /opt/robot-server
-        python3 /opt/robot-server/server.py &
+        nohup python3 /opt/robot-server/server.py >/tmp/robot-server.log 2>&1 &
         ;;
     stop)
         echo "Deteniendo robot-server..."
-        killall python3
+        killall python3 2>/dev/null || true
         ;;
     *)
         echo "Uso: $0 {start|stop}"

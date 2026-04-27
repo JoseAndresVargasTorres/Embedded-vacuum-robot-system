@@ -6,5 +6,10 @@ inherit core-image
 IMAGE_INSTALL:append = " \
     robot-server \
     libcontrol \
+    wpa-supplicant \
+    gcc \
+    binutils \
+    glibc-dev \
+    alsa-state \
 "
 
