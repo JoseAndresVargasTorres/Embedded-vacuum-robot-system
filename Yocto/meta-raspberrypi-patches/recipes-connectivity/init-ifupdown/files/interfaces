@@ -1,0 +1,11 @@
+auto lo
+iface lo inet loopback
+
+# Ethernet - prioridad máxima
+auto eth0
+iface eth0 inet dhcp
+
+# WiFi - automático
+auto wlan0
+iface wlan0 inet dhcp
+    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
